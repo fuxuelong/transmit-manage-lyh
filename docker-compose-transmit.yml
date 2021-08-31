@@ -1,0 +1,18 @@
+version: '3'
+services:
+  transmit-manage7075:
+    image: transmit-manage
+    hostname: transmit-manage7075
+    ports:
+      - "7075:7075"
+    environment:
+      - "spring.profiles.active=dev"
+    external_links:
+      - eureka-server7001
+      - eureka-server7002
+    volumes:
+      - /etc/timezone:/etc/timezone
+      - /etc/localtime:/etc/localtime
+
+#docker-compose -f docker-compose-transmit.yml up
+  
