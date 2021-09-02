@@ -1,0 +1,13 @@
+/target/
+/.idea/
+/.txlcn/
+/log/
+.DS_Store
+/src/main/resources/bootstrap.yml
+/logs/
+
+/transmit-manage.iml
+
+/src/test/resources/bootstrap.yml
+/src/main/resources/logging-config.xml
+!/src/main/resources/logging-config.xml

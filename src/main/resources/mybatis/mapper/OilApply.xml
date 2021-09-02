@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qk.transmit.dao.OilApplyDao">
+    <sql id="oilApplyColumns">
+		a.id AS "id",
+		a.transport_company_code AS "transportCompanyCode",
+		a.transport_company_name AS "transportCompanyName",
+		a.code AS "code",
+		a.process_instance_id AS "processInstanceId",
+		a.status AS "status",
+		a.yzdh AS "yzdh",
+		a.type AS "type",
+		a.start_city AS "startCity",
+		a.end_city AS "endCity",
+		a.oil_quantity AS "oilQuantity",
+		a.octane_rating AS "octaneRating",
+		a.create_name AS "createBy.name",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.remarks AS "remarks",
+		a.mileage_id AS "mileageId"
+	</sql>
+
+    <select id="get" resultType="com.qk.transmit.entity.OilApply">
+        SELECT
+        <include refid="oilApplyColumns"/>
+        FROM ts_oil_apply a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="com.qk.transmit.entity.OilApply">
+        SELECT
+        <include refid="oilApplyColumns"/>
+        FROM ts_oil_apply a
+        WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+        <if test="id != null and id != ''">
+            AND a.id = #{id}
+        </if>
+        <if test="transportCompanyCode != null and transportCompanyCode != ''">
+            AND a.transport_company_code LIKE CONCAT('%',#{transportCompanyCode},'%')
+        </if>
+        <if test="transportCompanyName != null and transportCompanyName != ''">
+            AND a.gas_Station_Name LIKE CONCAT('%',#{transportCompanyName},'%')
+        </if>
+        <if test="code != null and code != ''">
+            AND a.code LIKE CONCAT('%',#{code},'%')
+        </if>
+        <if test="status != null and status != ''">
+            AND a.status = #{status}
+        </if>
+        <if test="yzdh != null and yzdh != ''">
+            AND a.yzdh = #{yzdh}
+        </if>
+        <if test="type != null and type != ''">
+            AND a.type = #{type}
+        </if>
+        <if test="sqlStr != null and sqlStr != ''">
+            ${sqlStr}
+        </if>
+        ORDER BY a.create_date DESC
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO ts_oil_apply(
+            transport_company_code,
+            transport_company_name,
+            code,
+            process_instance_id,
+            status,
+            yzdh,
+            type,
+            start_city,
+            end_city,
+            mileage_id,
+            oil_quantity,
+            octane_rating,
+            office_id,
+            create_by,
+            create_name,
+            create_date,
+            update_by,
+            update_date,
+            remarks,
+            del_flag
+        ) VALUES (
+            #{transportCompanyCode},
+            #{transportCompanyName},
+            #{code},
+            #{processInstanceId},
+            #{status},
+            #{yzdh},
+            #{type},
+            #{startCity},
+            #{endCity},
+            #{mileageId},
+            #{oilQuantity},
+            #{octaneRating},
+            #{officeId},
+            #{createBy.id},
+            #{createBy.name},
+            #{createDate},
+            #{updateBy.id},
+            #{updateDate},
+            #{remarks},
+            #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        update ts_oil_apply
+        <set>
+            <if test="transportCompanyName != null">
+                transport_company_name = #{transportCompanyName},
+            </if>
+            <if test="transportCompanyCode != null">
+                transport_company_code = #{transportCompanyCode},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="processInstanceId != null">
+                process_instance_id = #{processInstanceId},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="yzdh != null">
+                yzdh = #{yzdh},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="startCity != null">
+                start_city = #{startCity},
+            </if>
+            <if test="endCity != null">
+                end_city = #{endCity},
+            </if>
+            <if test="oilQuantity != null">
+                oil_quantity = #{oilQuantity},
+            </if>
+            <if test="octaneRating != null">
+                octane_rating = #{octaneRating},
+            </if>
+            update_by = #{updateBy.id,jdbcType=INTEGER},
+            update_date = #{updateDate,jdbcType=TIMESTAMP},
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateProcInstanceId">
+		UPDATE ts_oil_apply SET
+			process_instance_id = #{processInstanceId}
+		WHERE id = #{id}
+	</update>
+
+    <update id="delete">
+		UPDATE ts_oil_apply SET
+			del_flag = 1
+		WHERE id = #{id}
+	</update>
+
+    <update id="updateStatus">
+		UPDATE ts_oil_apply SET
+			status = #{status}
+		WHERE id = #{id}
+	</update>
+
+    <select id="getMaxCode" resultType="java.lang.String">
+        select code
+        from ts_oil_apply
+        where code like concat('%',#{code},'%') ORDER BY id DESC LIMIT 1
+    </select>
+</mapper>
