@@ -88,7 +88,7 @@ public class MoveStockApply extends WorkFlowEntity<MoveStockApply> {
     /**
      * 创建者
      */
-    private String createBy;  //数据库中对应为int型
+//    private Integer createBy;  //数据库中对应为int型
 
     /**
      * 创建者名字
@@ -98,17 +98,17 @@ public class MoveStockApply extends WorkFlowEntity<MoveStockApply> {
     /**
      * 创建时间
      */
-    private Date createDate;
+//    private Date createDate;
 
     /**
      * 更新者
      */
-    private Integer updateBy;
+//    private String updateBy; //数据库中对应为int型
 
     /**
      * 更新时间
      */
-    private Date updateDate;
+//    private Date updateDate;
 
     /**
      * 备注信息
