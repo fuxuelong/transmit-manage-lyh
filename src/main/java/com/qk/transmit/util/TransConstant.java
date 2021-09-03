@@ -7,6 +7,10 @@ package com.qk.transmit.util;
  * @date 2021/5/8
  */
 public class TransConstant {
+    /**************移库信息申请状态字典****************/
+    public static final Integer MOVE_STOCK_APPLY_STATUS_SUBMIT = 5;
+    public static final Integer MOVE_STOCK_APPLY_STATUS_REJECT = -10;
+    public static final Integer MOVE_STOCK_APPLY_STATUS_PASS = 10;
     /*************是、否、对、错****************/
     public static String YES = "1";
     public static String NO = "0";
