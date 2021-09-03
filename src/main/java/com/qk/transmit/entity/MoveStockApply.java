@@ -93,7 +93,7 @@ public class MoveStockApply extends WorkFlowEntity<MoveStockApply> {
     /**
      * 创建者名字
      */
-    private String createName;
+//    private String createName;
 
     /**
      * 创建时间

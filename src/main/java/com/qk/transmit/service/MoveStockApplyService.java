@@ -8,7 +8,6 @@ import com.qk.transmit.entity.MoveStockApply;
 
 public interface MoveStockApplyService extends CrudService<MoveStockApplyDao, MoveStockApply> {
 
-
     /**
      * 添加
      *
