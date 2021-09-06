@@ -7,11 +7,20 @@ package com.qk.transmit.util;
  * @date 2021/5/8
  */
 public class TransConstant {
-    /**************移库信息申请状态字典****************/
 
-    public static final Integer MOVE_STOCK_APPLY_STATUS_SUBMIT = 5;
-    public static final Integer MOVE_STOCK_APPLY_STATUS_REJECT = -10;
-    public static final Integer MOVE_STOCK_APPLY_STATUS_PASS = 10;
+    /**************移库信息申请状态字典****************/
+    //销管驳回
+    public static final Integer MOVE_STOCK_APPLY_STATUS_XG_REJECT = -10;
+    //办事处驳回
+    public static final Integer MOVE_STOCK_APPLY_STATUS_BSC_REJECT = -5;
+    //提交
+    public static final Integer MOVE_STOCK_APPLY_STATUS_SUBMIT = 0;
+    //办事处审批通过
+    public static final Integer MOVE_STOCK_APPLY_STATUS_BSC_PASS = 5;
+    //销管审批通过
+    public static final Integer MOVE_STOCK_APPLY_STATUS_XG_PASS = 10;
+    //经销商接收
+    public static final Integer MOVE_STOCK_APPLY_STATUS_RECEIVED = 15;
     /*************是、否、对、错****************/
     public static String YES = "1";
     public static String NO = "0";

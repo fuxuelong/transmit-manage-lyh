@@ -25,6 +25,7 @@
 	<!--</sql>-->
     <resultMap id="BaseResultMap" type="com.qk.transmit.entity.MoveStockApply">
         <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
         <result column="process_instance_id" jdbcType="VARCHAR" property="processInstanceId" />
         <result column="status" jdbcType="VARCHAR" property="status" />
         <result column="cjh" jdbcType="INTEGER" property="cjh" />
@@ -76,11 +77,13 @@
         <if test="sqlStr != null and sqlStr != ''">
             ${sqlStr}
         </if>
+        ${sqlMap.dsf}
         ORDER BY a.create_date DESC
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO ts_move_stock_apply(
+        code,
         process_instance_id,
         status,
         cjh,
@@ -103,6 +106,7 @@
         remarks,
         del_flag
         ) VALUES (
+        #{code},
         #{processInstanceId},
         #{status},
         #{cjh},
@@ -130,6 +134,9 @@
     <update id="update">
         update ts_move_stock_apply
         <set>
+            <if test="code != null">
+                code = #{code},
+            </if>
             <if test="processInstanceId != null">
                 process_instance_id = #{processInstanceId},
             </if>

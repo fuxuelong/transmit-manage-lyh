@@ -16,6 +16,11 @@ import java.util.Date;
 public class MoveStockApply extends WorkFlowEntity<MoveStockApply> {
 
     /**
+     * 编码
+     */
+    private String code;
+
+    /**
      * 流程实例id
      */
     private String processInstanceId;
