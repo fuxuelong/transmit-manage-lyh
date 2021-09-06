@@ -31,9 +31,6 @@ public class MoveStockApplyServiceImpl extends CrudServiceImpl<MoveStockApplyDao
     @Autowired
     private FlowableServiceClient flowableServiceClient;
 
-//    @Autowired
-//    private RestTemplate restTemplate;
-
     /**
      * 添加
      *

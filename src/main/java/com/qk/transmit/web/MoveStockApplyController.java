@@ -16,41 +16,39 @@ public class MoveStockApplyController {
 
     @Autowired
     private MoveStockApplyService moveStockApplyServiceImpl;
-//    private MoveStockApplyService moveStockApplyService;
 
     /**
-    * 查询移库申请列表
-    *
-    * @param moveStockApply 移库实体对象
-    * @return 将得到的数据以List集合对象形式返回
-    */
+     * 查询移库申请列表
+     *
+     * @param moveStockApply 移库实体对象
+     * @return 将得到的数据以List集合对象形式返回
+     */
     @PostMapping("/getMoveStockApplyList")
-    public PageInfo<MoveStockApply> getCheckList(@RequestBody MoveStockApply moveStockApply){
-        System.out.println("=======================getMoveStockApplyList方法=====================================");
+    public PageInfo<MoveStockApply> getCheckList(@RequestBody MoveStockApply moveStockApply) {
         return moveStockApplyServiceImpl.findPage(moveStockApply);
     }
 
     /**
-    * 添加
-    *
-    * @param moveStockApply 移库实体对象
-    * @return 返回结果
-    */
+     * 添加
+     *
+     * @param moveStockApply 移库实体对象
+     * @return 返回结果
+     */
     @PostMapping("/addMoveStockApply")
-    public ResponseJson saveCheck(@RequestBody MoveStockApply moveStockApply){
+    public ResponseJson saveCheck(@RequestBody MoveStockApply moveStockApply) {
         checkParam(moveStockApply);
         moveStockApplyServiceImpl.addMoveStockApply(moveStockApply);
         return new ResponseJson(ResponseCode.OK);
     }
 
     /**
-    * 修改
-    *
-    * @param moveStockApply 移库实体对象
-    * return 返回结果
-    */
+     * 修改
+     *
+     * @param moveStockApply 移库实体对象
+     *                       return 返回结果
+     */
     @PostMapping("/auditMoveStockApply")
-    public ResponseJson auditMoveStockApply(@RequestBody MoveStockApply moveStockApply){
+    public ResponseJson auditMoveStockApply(@RequestBody MoveStockApply moveStockApply) {
         Object[] strArray = {
                 moveStockApply.getId(), moveStockApply.getWorkFlow().getFlag(),
                 moveStockApply.getWorkFlow().getProcInsId(), moveStockApply.getWorkFlow().getTaskId(),
@@ -73,11 +71,14 @@ public class MoveStockApplyController {
         if (StringUtils.isBlank(moveStockApply.getCjh())) {
             throw new CommonException(ResponseCode.FAIL, "车架号必传");
         }
-        if (StringUtils.isBlank(moveStockApply.getStartStockCode())) {
-            throw new CommonException(ResponseCode.FAIL, "所在仓库编码必传");
+        if (moveStockApply.getEndStockId() == null) {
+            throw new CommonException(ResponseCode.FAIL, "新仓库必传");
         }
-        if (StringUtils.isBlank(moveStockApply.getStartStockName())) {
-            throw new CommonException(ResponseCode.FAIL, "所在仓库名称必传");
+        if (StringUtils.isBlank(moveStockApply.getEndStockCode())) {
+            throw new CommonException(ResponseCode.FAIL, "新仓库编码必传");
+        }
+        if (StringUtils.isBlank(moveStockApply.getReason())) {
+            throw new CommonException(ResponseCode.FAIL, "移库原因必传");
         }
     }
 
