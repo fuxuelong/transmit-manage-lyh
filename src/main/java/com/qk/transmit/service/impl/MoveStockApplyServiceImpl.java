@@ -13,18 +13,26 @@ import com.qk.transmit.service.MoveStockApplyService;
 import com.qk.transmit.util.TransConstant;
 import org.apache.commons.lang.text.StrBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
+/**
+ * 移库信息申请修改
+ *
+ * @author  lyh
+ * @date 2021/9/3
+ */
+@Service
 public class MoveStockApplyServiceImpl extends CrudServiceImpl<MoveStockApplyDao, MoveStockApply>
         implements MoveStockApplyService {
 
     @Autowired
     private FlowableServiceClient flowableServiceClient;
 
-    @Autowired
-    private RestTemplate restTemplate;
+//    @Autowired
+//    private RestTemplate restTemplate;
 
     /**
      * 添加
@@ -39,7 +47,7 @@ public class MoveStockApplyServiceImpl extends CrudServiceImpl<MoveStockApplyDao
         User user = UserUtils.getUser();
 //        moveStockApply.setCreateBy(user.getOffice().getCode());
 //        moveStockApply.setCreateName(user.getOffice().getName());
-        moveStockApply.setOfficeId(user.getOffice().getId());
+        moveStockApply.setOfficeId(Integer.parseInt(user.getOffice().getId()));
         save(moveStockApply);
 
         // 启动工作流相关参数设置
@@ -91,6 +99,7 @@ public class MoveStockApplyServiceImpl extends CrudServiceImpl<MoveStockApplyDao
             return restTemplate.postForObject(SALECAEMANAGER_URL + "/auditMoveStockApply",moveStockApply,ResponseCode.class);
         }*/
         vars.put("pass", workFlow.getFlag());
+        vars.put("times", 5);
         workFlow.setVars(vars);
         // 驳回更新审批状态
         if ("0".equals(workFlow.getFlag())) {

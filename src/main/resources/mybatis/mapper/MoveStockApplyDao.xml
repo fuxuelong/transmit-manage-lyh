@@ -1,40 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qk.transmit.dao.MoveStockApplyDao">
-    <sql id="moveStockApplyColumns">
-		a.id AS "id",
-		a.status AS "status",
-		a.cjh AS "cjh",
-		a.start_stock_id AS "startStockId",
-		a.start_stock_code AS "startStockCode",
-		a.start_stock_name AS "startStockName",
-		a.end_stock_id AS "endStockId",
-		a.end_stock_code AS "endStockCode",
-		a.end_stock_name AS "endStockName",
-		a.reason AS "reason",
-		a.audit_date AS "auditDate",
-		a.receive_date AS "receiveDate",
-		a.times AS "times",
-		a.create_by AS "createBy",
-		a.create_name AS "createName",
-		a.create_date AS "createDate",
-		a.update_by AS "updateBy",
-		a.update_date AS "updateDate",
-		a.remarks AS "remarks",
-		a.del_flog AS "delFlog"
-	</sql>
+    <!--<sql id="moveStockApplyColumns">-->
+		<!--a.id AS "id",-->
+		<!--a.status AS "status",-->
+		<!--a.cjh AS "cjh",-->
+		<!--a.start_stock_id AS "startStockId",-->
+		<!--a.start_stock_code AS "startStockCode",-->
+		<!--a.start_stock_name AS "startStockName",-->
+		<!--a.end_stock_id AS "endStockId",-->
+		<!--a.end_stock_code AS "endStockCode",-->
+		<!--a.end_stock_name AS "endStockName",-->
+		<!--a.reason AS "reason",-->
+		<!--a.audit_date AS "auditDate",-->
+		<!--a.receive_date AS "receiveDate",-->
+		<!--a.times AS "times",-->
+		<!--a.create_by AS "createBy",-->
+		<!--a.create_name AS "createName",-->
+		<!--a.create_date AS "createDate",-->
+		<!--a.update_by AS "updateBy",-->
+		<!--a.update_date AS "updateDate",-->
+		<!--a.remarks AS "remarks",-->
+		<!--a.del_flag AS "delFlag"-->
+	<!--</sql>-->
+    <resultMap id="BaseResultMap" type="com.qk.transmit.entity.MoveStockApply">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="process_instance_id" jdbcType="VARCHAR" property="processInstanceId" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="cjh" jdbcType="INTEGER" property="cjh" />
+        <result column="start_stock_id" jdbcType="INTEGER" property="startStockId" />
+        <result column="start_stock_code" jdbcType="VARCHAR" property="startStockCode" />
+        <result column="start_stock_name" jdbcType="VARCHAR" property="startStockName" />
+        <result column="end_stock_id" jdbcType="INTEGER" property="endStockId" />
+        <result column="end_stock_code" jdbcType="VARCHAR" property="endStockCode" />
+        <result column="end_stock_name" jdbcType="VARCHAR" property="endStockName" />
+        <result column="reason" jdbcType="VARCHAR" property="reason" />
+        <result column="audit_date" jdbcType="DATE" property="auditDate" />
+        <result column="receive_date" jdbcType="DATE" property="receiveDate" />
+        <result column="times" jdbcType="INTEGER" property="times" />
+        <result column="create_by" jdbcType="INTEGER" property="createBy.id" />
+        <result column="create_name" jdbcType="VARCHAR" property="createBy.name" />
+        <result column="create_date" jdbcType="DATE" property="updateDate" />
+        <result column="update_by" jdbcType="INTEGER" property="updateBy.id" />
+        <result column="update_date" jdbcType="DATE" property="updateDate" />
+        <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+        <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+    </resultMap>
 
 
     <select id="get" resultType="com.qk.transmit.entity.MoveStockApply">
-        SELECT
-        <include refid="moveStockApplyColumns"/>
-        FROM ts_move_stock_apply
+        SELECT *
+        FROM ts_move_stock_apply a
         WHERE a.id = #{id}
     </select>
 
     <select id="findList" resultType="com.qk.transmit.entity.MoveStockApply">
-        SELECT
-        <include refid="moveStockApplyColumns"/>
+        SELECT *
         FROM ts_oil_apply a
         WHERE a.del_flag = #{DEL_FLAG_NORMAL}
         <if test="id != null and id != ''">

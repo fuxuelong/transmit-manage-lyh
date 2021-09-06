@@ -4,6 +4,7 @@ package com.qk.transmit.dao;
 import com.qk.commonservice.dao.CrudDao;
 import com.qk.transmit.entity.MoveStockApply;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 /**

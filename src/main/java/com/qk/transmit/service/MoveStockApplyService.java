@@ -5,7 +5,9 @@ import com.qk.commonservice.exception.ResponseCode;
 import com.qk.commonservice.service.CrudService;
 import com.qk.transmit.dao.MoveStockApplyDao;
 import com.qk.transmit.entity.MoveStockApply;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface MoveStockApplyService extends CrudService<MoveStockApplyDao, MoveStockApply> {
 
     /**
