@@ -26,6 +26,7 @@ public class MoveStockApplyController {
     */
     @PostMapping("/getMoveStockApplyList")
     public PageInfo<MoveStockApply> getCheckList(@RequestBody MoveStockApply moveStockApply){
+        System.out.println("=======================getMoveStockApplyList方法=====================================");
         return moveStockApplyServiceImpl.findPage(moveStockApply);
     }
 

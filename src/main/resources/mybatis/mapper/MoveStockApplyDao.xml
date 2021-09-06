@@ -1,11 +1,180 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qk.transmit.dao.MoveStockApplyDao">
+    <!--<sql id="moveStockApplyColumns">-->
+		<!--a.id AS "id",-->
+		<!--a.status AS "status",-->
+		<!--a.cjh AS "cjh",-->
+		<!--a.start_stock_id AS "startStockId",-->
+		<!--a.start_stock_code AS "startStockCode",-->
+		<!--a.start_stock_name AS "startStockName",-->
+		<!--a.end_stock_id AS "endStockId",-->
+		<!--a.end_stock_code AS "endStockCode",-->
+		<!--a.end_stock_name AS "endStockName",-->
+		<!--a.reason AS "reason",-->
+		<!--a.audit_date AS "auditDate",-->
+		<!--a.receive_date AS "receiveDate",-->
+		<!--a.times AS "times",-->
+		<!--a.create_by AS "createBy",-->
+		<!--a.create_name AS "createName",-->
+		<!--a.create_date AS "createDate",-->
+		<!--a.update_by AS "updateBy",-->
+		<!--a.update_date AS "updateDate",-->
+		<!--a.remarks AS "remarks",-->
+		<!--a.del_flag AS "delFlag"-->
+	<!--</sql>-->
+    <resultMap id="BaseResultMap" type="com.qk.transmit.entity.MoveStockApply">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="process_instance_id" jdbcType="VARCHAR" property="processInstanceId" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="cjh" jdbcType="INTEGER" property="cjh" />
+        <result column="start_stock_id" jdbcType="INTEGER" property="startStockId" />
+        <result column="start_stock_code" jdbcType="VARCHAR" property="startStockCode" />
+        <result column="start_stock_name" jdbcType="VARCHAR" property="startStockName" />
+        <result column="end_stock_id" jdbcType="INTEGER" property="endStockId" />
+        <result column="end_stock_code" jdbcType="VARCHAR" property="endStockCode" />
+        <result column="end_stock_name" jdbcType="VARCHAR" property="endStockName" />
+        <result column="reason" jdbcType="VARCHAR" property="reason" />
+        <result column="audit_date" jdbcType="DATE" property="auditDate" />
+        <result column="receive_date" jdbcType="DATE" property="receiveDate" />
+        <result column="times" jdbcType="INTEGER" property="times" />
+        <result column="create_by" jdbcType="INTEGER" property="createBy.id" />
+        <result column="create_name" jdbcType="VARCHAR" property="createBy.name" />
+        <result column="create_date" jdbcType="DATE" property="updateDate" />
+        <result column="update_by" jdbcType="INTEGER" property="updateBy.id" />
+        <result column="update_date" jdbcType="DATE" property="updateDate" />
+        <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+        <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+    </resultMap>
+
+
+    <select id="get" resultType="com.qk.transmit.entity.MoveStockApply">
+        SELECT *
+        FROM ts_move_stock_apply a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="com.qk.transmit.entity.MoveStockApply">
+        SELECT *
+        FROM ts_oil_apply a
+        WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+        <if test="id != null and id != ''">
+            AND a.id = #{id}
+        </if>
+        <if test="startStockCode != null and startStockCode != ''">
+            AND a.start_stock_code LIKE CONCAT('%',#{startStockCode},'%')
+        </if>
+        <if test="startStockName != null and startStockName != ''">
+            AND a.start_stock_name LIKE CONCAT('%',#{startStockName},'%')
+        </if>
+        <if test="cjh != null and cjh != ''">
+            AND a.code LIKE CONCAT('%',#{code},'%')
+        </if>
+        <if test="status != null and status != ''">
+            AND a.status = #{status}
+        </if>
+        <if test="sqlStr != null and sqlStr != ''">
+            ${sqlStr}
+        </if>
+        ORDER BY a.create_date DESC
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO ts_move_stock_apply(
+        process_instance_id,
+        status,
+        cjh,
+        start_stock_id,
+        start_stock_code,
+        start_stock_name,
+        end_stock_id,
+        end_stock_code,
+        end_stock_name,
+        reason,
+        audit_date,
+        receive_date,
+        times,
+        office_id,
+        create_by,
+        create_name,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{processInstanceId},
+        #{status},
+        #{cjh},
+        #{startStockId},
+        #{startStockCode},
+        #{startStockName},
+        #{endStockId},
+        #{endStockCode},
+        #{endStockName},
+        #{reason},
+        #{auditDate},
+        #{receiveDate},
+        #{times},
+        #{officeId},
+        #{createBy.id},
+        #{createBy.name},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        update ts_move_stock_apply
+        <set>
+            <if test="processInstanceId != null">
+                process_instance_id = #{processInstanceId},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="cjh != null">
+                cjh = #{cjh},
+            </if>
+            <if test="startStockCode != null">
+                start_stock_code = #{startStockCode},
+            </if>
+            <if test="startStockName != null">
+                start_stock_name = #{startStockName},
+            </if>
+            <if test="startStockCode != null">
+                end_stock_code = #{endStockCode},
+            </if>
+            <if test="endStockName != null">
+                end_stock_name = #{endStockName},
+            </if>
+            <if test="reason != null">
+                reason = #{reason},
+            </if>
+            update_by = #{updateBy.id,jdbcType=INTEGER},
+            update_date = #{updateDate,jdbcType=TIMESTAMP},
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
     <update id="updateProcInstanceId">
         UPDATE ts_move_stock_apply SET
         process_instance_id = #{processInstanceId}
         WHERE id = #{id}
     </update>
+
+    <update id="delete">
+        UPDATE ts_move_stock_apply SET
+        del_flag = 1
+        WHERE id = #{id}
+    </update>
+
     <update id="updateStatus">
         UPDATE ts_move_stock_apply SET
         status = #{status}

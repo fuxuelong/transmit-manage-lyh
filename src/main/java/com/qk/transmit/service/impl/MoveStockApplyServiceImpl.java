@@ -1,7 +1,5 @@
 package com.qk.transmit.service.impl;
 
-
-import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.qk.commonservice.commonutil.UserUtils;
 import com.qk.commonservice.exception.ResponseCode;
@@ -13,21 +11,28 @@ import com.qk.transmit.entity.MoveStockApply;
 import com.qk.transmit.service.FlowableServiceClient;
 import com.qk.transmit.service.MoveStockApplyService;
 import com.qk.transmit.util.TransConstant;
-import com.qk.transmit.util.TransUtils;
 import org.apache.commons.lang.text.StrBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
+/**
+ * 移库信息申请修改
+ *
+ * @author  lyh
+ * @date 2021/9/3
+ */
+@Service
 public class MoveStockApplyServiceImpl extends CrudServiceImpl<MoveStockApplyDao, MoveStockApply>
         implements MoveStockApplyService {
 
     @Autowired
     private FlowableServiceClient flowableServiceClient;
 
+//    @Autowired
+//    private RestTemplate restTemplate;
 
     /**
      * 添加
@@ -40,9 +45,7 @@ public class MoveStockApplyServiceImpl extends CrudServiceImpl<MoveStockApplyDao
     public ResponseCode addMoveStockApply(MoveStockApply moveStockApply) {
         moveStockApply.setStatus(TransConstant.MOVE_STOCK_APPLY_STATUS_SUBMIT);
         User user = UserUtils.getUser();
-        moveStockApply.setCreateBy(user);
-        moveStockApply.setCreateName(user.getOffice().getName());
-        moveStockApply.setOfficeId(user.getOffice().getId());
+        moveStockApply.setOfficeId(Integer.parseInt(user.getOffice().getId()));
         save(moveStockApply);
 
         // 启动工作流相关参数设置
@@ -88,7 +91,13 @@ public class MoveStockApplyServiceImpl extends CrudServiceImpl<MoveStockApplyDao
         } else {
             vars = Maps.newHashMap();
         }
+        /*if(moveStockApply.getTimes() >= 5){
+            //销管部整车资产管理室审核
+            // 提交申请给销管部整车资产管理室模块，审批状态和工作流在那个模块修改，并返回结果
+            return restTemplate.postForObject(SALECAEMANAGER_URL + "/auditMoveStockApply",moveStockApply,ResponseCode.class);
+        }*/
         vars.put("pass", workFlow.getFlag());
+        vars.put("times", 5);
         workFlow.setVars(vars);
         // 驳回更新审批状态
         if ("0".equals(workFlow.getFlag())) {

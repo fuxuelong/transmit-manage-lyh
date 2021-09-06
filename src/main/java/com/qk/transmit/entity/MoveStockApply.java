@@ -1,8 +1,9 @@
 package com.qk.transmit.entity;
-import com.alibaba.druid.sql.visitor.functions.Char;
+
 import com.qk.commonservice.baseentity.WorkFlowEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 import java.util.Date;
 
 /**
@@ -83,26 +84,10 @@ public class MoveStockApply extends WorkFlowEntity<MoveStockApply> {
     /**
      * 经销商组织结构
      */
-    private String officeId;  //数据库中对应为int型
-
+    private Integer officeId;
     /**
      * 创建者名字
      */
     private String createName;
-
-    /**
-     * 创建时间
-     */
-    private Date createDate;
-
-    /**
-     * 更新时间
-     */
-    private Date updateDate;
-
-    /**
-     * 备注信息
-     */
-    private String remarks;
 
 }
