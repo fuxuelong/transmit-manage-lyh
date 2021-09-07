@@ -30,4 +30,11 @@ public interface MoveStockApplyDao extends CrudDao<MoveStockApply> {
      * @return 操作结果
      */
     void updateStatus(MoveStockApply moveStockApply);
+
+    /**
+     * 更新车辆所在仓库
+     *
+     * @return 操作结果
+     */
+    void updateTruckStock(@Param("stockId") String stockId, @Param("truckId") String truckId);
 }

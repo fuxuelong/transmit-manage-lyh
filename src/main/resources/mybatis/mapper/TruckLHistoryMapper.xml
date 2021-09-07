@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qk.transmit.dao.TruckHistoryDao">
+    <sql id="truckHistoryColumns">
+
+    </sql>
+
+    <sql id="truckHistoryJoins">
+    </sql>
+
+    <select id="get" resultType="com.qk.transmit.entity.TruckHistory">
+        SELECT
+        <include refid="truckHistoryColumns"/>
+        FROM tr_truck_history a
+        <include refid="truckHistoryJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="com.qk.transmit.entity.TruckHistory">
+        SELECT
+        <include refid="truckHistoryColumns"/>
+        FROM tr_truck_history a
+        <include refid="truckHistoryJoins"/>
+        <where>
+
+        </where>
+    </select>
+  
+    <insert id="insert">
+        insert into tr_truck_history(
+            truck_id,
+            ddh,
+            xsdh,
+            cjh,
+            dealer_branch_code,
+            status,
+            stock_name,
+            operate_date,
+            operator,
+            remarks
+        ) values (
+            #{truckId},
+            #{orderCode},
+            #{salesBillCode},
+            #{cjh},
+            #{dealerBranchCode},
+            #{status},
+            #{stockName},
+            #{operateDate},
+            #{operator},
+            #{remarks}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        insert into tr_truck_history(
+            truck_id,
+            ddh,
+            xsdh,
+            cjh,
+            dealer_branch_code,
+            status,
+            stock_name,
+            operate_date,
+            operator,
+            remarks
+        ) values  <foreach collection="list" item="item" index="index" separator=",">(
+            #{item.truckId},
+            #{item.orderCode},
+            #{item.salesBillCode},
+            #{item.cjh},
+            #{item.dealerBranchCode},
+            #{item.status},
+            #{item.stockName},
+            #{item.operateDate},
+            #{item.operator},
+            #{item.remarks}
+        )
+    </foreach>
+    </insert>
+</mapper>

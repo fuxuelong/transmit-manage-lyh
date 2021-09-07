@@ -7,10 +7,6 @@ package com.qk.transmit.util;
  * @date 2021/5/8
  */
 public class TransConstant {
-    /**************移库信息申请状态字典****************/
-    public static final Integer MOVE_STOCK_APPLY_STATUS_SUBMIT = 5;
-    public static final Integer MOVE_STOCK_APPLY_STATUS_REJECT = -10;
-    public static final Integer MOVE_STOCK_APPLY_STATUS_PASS = 10;
     /*************是、否、对、错****************/
     public static String YES = "1";
     public static String NO = "0";
@@ -40,4 +36,27 @@ public class TransConstant {
     public static String FAULT_DATA_TYPE_TRANSMIT_CANCEL = "废除运转单";
     public static String FAULT_DATA_TYPE_STOCK = "接车点";
     public static String FAULT_DATA_TYPE_DRIVER = "送车司机";
+    /**************移库信息申请状态字典****************/
+    //销管驳回
+    public static final Integer MOVE_STOCK_APPLY_STATUS_XG_REJECT = -10;
+    //办事处驳回
+    public static final Integer MOVE_STOCK_APPLY_STATUS_BSC_REJECT = -5;
+    //提交
+    public static final Integer MOVE_STOCK_APPLY_STATUS_SUBMIT = 0;
+    //办事处审批通过
+    public static final Integer MOVE_STOCK_APPLY_STATUS_BSC_PASS = 5;
+    //销管审批通过
+    public static final Integer MOVE_STOCK_APPLY_STATUS_XG_PASS = 10;
+    //经销商接收
+    public static final Integer MOVE_STOCK_APPLY_STATUS_RECEIVED = 15;
+    /*************流程KYE****************/
+    //移库
+    public static String MOVE_STOCK_APPLY = "moveStockApply";
+    /*************流程待办任务KYE****************/
+    //办事处审批
+    public static String BSC_AUDIT = "bscAudit";
+    //销管审批
+    public static String XG_AUDIT = "xgAudit";
+    //经销商接车
+    public static String DEALER_RECEIVE = "dealerReceive";
 }

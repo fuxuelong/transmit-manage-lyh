@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qk.transmit.dao.TrucksDao">
+    <sql id="trucksColumns">
+		a.id AS "id",
+		a.xsdh AS "salesBillCode",
+	    xsd.id AS "salesBillId",
+		a.old_xsdh AS "oldSaleBillCode",
+		a.ddh AS "orderCode",
+		a.status AS "status",
+		a.stock_id AS "stock.id",
+		a.cjh AS "cjh",
+		a.fdjh AS "engineCode",
+		a.isbook AS "isBook",
+		a.book_date AS "bookDate",
+		a.cancel_book_date AS "cancelBookDate",
+		a.sales_status AS "salesStatus",
+		a.dealer_branch_id AS "dealerBranch.id",
+		a.settlement_flag AS "settlementFlag",
+		a.settlement_date AS "settlementDate",
+		a.share_type AS "shareType",
+		a.ywms AS "businessMode",
+		a.ccprice AS "price",
+		a.original_ddh AS "originalOrderCode",
+		a.hgz_post_status AS "id",
+		a.vin AS "vin",
+		<!--a.veh_clxh AS "certificateName",-->
+		a.office_id AS "byOffice.id",
+		a.create_by AS "createBy.id",
+		a.create_name AS "createBy.name",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		branch.code AS "dealerBranchCode",
+        branch.name AS "dealerBranch.name",
+        branch.short_name AS "dealerBranch.shortName",
+        stock.code AS "stock.code",
+        stock.name AS "stock.name"
+	</sql>
+
+    <sql id="trucksJoins">
+        left join mk_dealer_branch branch on branch.id = a.dealer_branch_id
+        left join ts_stock stock on stock.id = a.stock_id
+	    left join sm_salesbill xsd on xsd.xsdh = a.xsdh
+    </sql>
+
+    <select id="get" resultType="com.qk.transmit.entity.Trucks">
+        SELECT
+        <include refid="trucksColumns"/>
+        FROM tr_trucks a
+        <include refid="trucksJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="com.qk.transmit.entity.Trucks">
+        select
+        <include refid="trucksColumns"/>
+        from tr_trucks a
+        where a.del_flag = 0
+        <if test="orderCode != null and orderCode != ''">
+            and a.ddh = #{orderCode}
+        </if>
+    </select>
+
+    <select id="getByCjh" resultType="com.qk.transmit.entity.Trucks">
+        select
+        <include refid="trucksColumns"/>
+        from tr_trucks a
+        <include refid="trucksJoins"/>
+        where a.del_flag = '0' and (a.status > 0 OR a.status IS NULL ) and a.cjh = #{cjh}
+    </select>
+
+    <update id="updateStatus">
+        update tr_trucks set
+          status = #{status},
+	      fdjh = #{engineCode}
+        where id = #{id}
+    </update>
+
+    <update id="updateHgzPostStatus">
+        update tr_trucks set
+          hgz_post_status = #{hgzPostStatus}
+        where id = #{id}
+    </update>
+
+	<update id="updateTruckIntoShare" parameterType="hashmap">
+		update tr_trucks a join tr_trucklife t on t.truck_id = a.id
+		set
+		<if test="shareType != null and shareType != ''">
+			a.share_type = #{shareType},
+		</if>
+		<if test="status != null and status != ''">
+			a.status = #{status},
+		</if>
+		<if test="salesStatus != null and salesStatus != ''">
+			a.sales_status = #{salesStatus},
+		</if>
+		<if test="salesBillStop != null">
+			t.salesbill_stop = #{salesBillStop},
+		</if>
+		<if test="returnTruckDate != null">
+			t.return_truck = #{returnTruckDate},
+		</if>
+		<if test="isReturn != null and isReturn == 1">
+			t.jnck = null, t.zsck = null, t.jxsrk = null,
+		</if>
+		a.xsdh = a.xsdh
+		where a.xsdh = #{salesBillCode}
+	</update>
+
+</mapper>

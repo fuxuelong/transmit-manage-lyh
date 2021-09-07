@@ -25,6 +25,7 @@
 	<!--</sql>-->
     <resultMap id="BaseResultMap" type="com.qk.transmit.entity.MoveStockApply">
         <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
         <result column="process_instance_id" jdbcType="VARCHAR" property="processInstanceId" />
         <result column="status" jdbcType="VARCHAR" property="status" />
         <result column="cjh" jdbcType="INTEGER" property="cjh" />
@@ -40,7 +41,7 @@
         <result column="times" jdbcType="INTEGER" property="times" />
         <result column="create_by" jdbcType="INTEGER" property="createBy.id" />
         <result column="create_name" jdbcType="VARCHAR" property="createBy.name" />
-        <result column="create_date" jdbcType="DATE" property="updateDate" />
+        <result column="create_date" jdbcType="DATE" property="createDate" />
         <result column="update_by" jdbcType="INTEGER" property="updateBy.id" />
         <result column="update_date" jdbcType="DATE" property="updateDate" />
         <result column="remarks" jdbcType="VARCHAR" property="remarks" />
@@ -48,15 +49,15 @@
     </resultMap>
 
 
-    <select id="get" resultType="com.qk.transmit.entity.MoveStockApply">
+    <select id="get" resultMap="BaseResultMap">
         SELECT *
         FROM ts_move_stock_apply a
         WHERE a.id = #{id}
     </select>
 
-    <select id="findList" resultType="com.qk.transmit.entity.MoveStockApply">
+    <select id="findList"  resultMap="BaseResultMap">
         SELECT *
-        FROM ts_oil_apply a
+        FROM ts_move_stock_apply a
         WHERE a.del_flag = #{DEL_FLAG_NORMAL}
         <if test="id != null and id != ''">
             AND a.id = #{id}
@@ -67,8 +68,17 @@
         <if test="startStockName != null and startStockName != ''">
             AND a.start_stock_name LIKE CONCAT('%',#{startStockName},'%')
         </if>
-        <if test="cjh != null and cjh != ''">
+        <if test="endStockCode != null and endStockCode != ''">
+            AND a.end_stock_code LIKE CONCAT('%',#{endStockCode},'%')
+        </if>
+        <if test="endStockName != null and endStockName != ''">
+            AND a.end_stock_name LIKE CONCAT('%',#{endStockName},'%')
+        </if>
+        <if test="code != null and code != ''">
             AND a.code LIKE CONCAT('%',#{code},'%')
+        </if>
+        <if test="cjh != null and cjh != ''">
+            AND a.cjh LIKE CONCAT('%',#{cjh},'%')
         </if>
         <if test="status != null and status != ''">
             AND a.status = #{status}
@@ -76,11 +86,13 @@
         <if test="sqlStr != null and sqlStr != ''">
             ${sqlStr}
         </if>
+        ${sqlMap.dsf}
         ORDER BY a.create_date DESC
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO ts_move_stock_apply(
+        code,
         process_instance_id,
         status,
         cjh,
@@ -103,6 +115,7 @@
         remarks,
         del_flag
         ) VALUES (
+        #{code},
         #{processInstanceId},
         #{status},
         #{cjh},
@@ -130,6 +143,9 @@
     <update id="update">
         update ts_move_stock_apply
         <set>
+            <if test="code != null">
+                code = #{code},
+            </if>
             <if test="processInstanceId != null">
                 process_instance_id = #{processInstanceId},
             </if>
@@ -176,8 +192,30 @@
     </update>
 
     <update id="updateStatus">
-        UPDATE ts_move_stock_apply SET
-        status = #{status}
+        UPDATE ts_move_stock_apply
+        <set>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="auditDate != null">
+                audit_date = #{auditDate},
+            </if>
+            <if test="receiveDate != null">
+                receive_date = #{receiveDate},
+            </if>
+        </set>
         WHERE id = #{id}
     </update>
+
+    <update id="updateTruckStock">
+        UPDATE tr_trucks
+        SET stock_id = #{stockId}
+        WHERE id = #{truckId}
+    </update>
+
+    <select id="getMaxCode" resultType="java.lang.String">
+        select code
+        from ts_move_stock_apply
+        where code like concat('%',#{code},'%') ORDER BY id DESC LIMIT 1
+    </select>
 </mapper>

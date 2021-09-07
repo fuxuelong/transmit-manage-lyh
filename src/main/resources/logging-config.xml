@@ -75,7 +75,7 @@
         </logger>
     </springProfile>
 
-    <logger name="com.qk.transmit.dao" level="error" additivity="false">
+    <logger name="com.qk.transmit.dao" level="debug" additivity="false">
     <appender-ref ref="console"/>
     </logger>
 </configuration>

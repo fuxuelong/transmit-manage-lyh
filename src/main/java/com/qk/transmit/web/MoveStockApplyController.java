@@ -2,6 +2,7 @@ package com.qk.transmit.web;
 
 import com.github.pagehelper.PageInfo;
 import com.qk.commonservice.commonutil.StringUtils;
+import com.qk.commonservice.commonutil.UserUtils;
 import com.qk.commonservice.exception.CommonException;
 import com.qk.commonservice.exception.ResponseCode;
 import com.qk.commonservice.sysentity.ResponseJson;
@@ -25,7 +26,18 @@ public class MoveStockApplyController {
      */
     @PostMapping("/getMoveStockApplyList")
     public PageInfo<MoveStockApply> getCheckList(@RequestBody MoveStockApply moveStockApply) {
-        return moveStockApplyServiceImpl.findPage(moveStockApply);
+        return moveStockApplyServiceImpl.findPageFilter(moveStockApply, UserUtils.getUser(), "a");
+    }
+
+    /**
+     * get移库申请
+     *
+     * @param id id
+     * @return 将得到的数据以List集合对象形式返回
+     */
+    @PostMapping("/getMoveStockApply")
+    public MoveStockApply getMoveStockApply(@RequestParam String id) {
+        return moveStockApplyServiceImpl.get(id);
     }
 
     /**
@@ -37,8 +49,8 @@ public class MoveStockApplyController {
     @PostMapping("/addMoveStockApply")
     public ResponseJson saveCheck(@RequestBody MoveStockApply moveStockApply) {
         checkParam(moveStockApply);
-        moveStockApplyServiceImpl.addMoveStockApply(moveStockApply);
-        return new ResponseJson(ResponseCode.OK);
+        ResponseCode code = moveStockApplyServiceImpl.addMoveStockApply(moveStockApply);
+        return new ResponseJson(code);
     }
 
     /**
@@ -57,9 +69,8 @@ public class MoveStockApplyController {
         if (!StringUtils.isAllNotBlank(strArray)) {
             return new ResponseJson(ResponseCode.FAIL, "必传字段为空");
         }
-        checkParam(moveStockApply);
-        moveStockApplyServiceImpl.auditMoveStockApply(moveStockApply);
-        return new ResponseJson(ResponseCode.OK);
+        ResponseCode code = moveStockApplyServiceImpl.auditMoveStockApply(moveStockApply);
+        return new ResponseJson(code);
     }
 
     /**
@@ -72,13 +83,13 @@ public class MoveStockApplyController {
             throw new CommonException(ResponseCode.FAIL, "车架号必传");
         }
         if (moveStockApply.getEndStockId() == null) {
-            throw new CommonException(ResponseCode.FAIL, "新仓库必传");
+            throw new CommonException(ResponseCode.FAIL, "目的仓库id必传");
         }
         if (StringUtils.isBlank(moveStockApply.getEndStockCode())) {
-            throw new CommonException(ResponseCode.FAIL, "新仓库编码必传");
+            throw new CommonException(ResponseCode.FAIL, "目的仓库编码必传");
         }
-        if (StringUtils.isBlank(moveStockApply.getReason())) {
-            throw new CommonException(ResponseCode.FAIL, "移库原因必传");
+        if (StringUtils.isBlank(moveStockApply.getEndStockName())) {
+            throw new CommonException(ResponseCode.FAIL, "目的仓库名称必传");
         }
     }
 
