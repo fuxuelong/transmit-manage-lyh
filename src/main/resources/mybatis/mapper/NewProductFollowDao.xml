@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qk.transmit.dao.NewProductFollowDao">
+  <resultMap id="BaseResultMap" type="com.qk.transmit.entity.NewProductFollow">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cjh" jdbcType="VARCHAR" property="cjh" />
+    <result column="cxh" jdbcType="VARCHAR" property="cxh" />
+    <result column="engine_type" jdbcType="VARCHAR" property="engineType" />
+    <result column="drive_kilometer" jdbcType="DOUBLE" property="driveKilometer" />
+    <result column="goods_type" jdbcType="VARCHAR" property="goodsType" />
+    <result column="goods_tonnage" jdbcType="INTEGER" property="goodsTonnage" />
+    <result column="follow_kilometer" jdbcType="DOUBLE" property="followKilometer" />
+    <result column="car_type" jdbcType="VARCHAR" property="carType" />
+    <result column="engine_idle_speed" jdbcType="INTEGER" property="engineIdleSpeed" />
+    <result column="engine_empty_idle_highspeed" jdbcType="INTEGER" property="engineEmptyIdleHighspeed" />
+    <result column="empty_top_gear_maxspeed" jdbcType="INTEGER" property="emptyTopGearMaxspeed" />
+    <result column="empty_secondary_gear_maxspeed" jdbcType="INTEGER" property="emptySecondaryGearMaxspeed" />
+    <result column="empty_secondary_gear_maxspeed_rotation" jdbcType="INTEGER" property="emptySecondaryGearMaxspeedRotation" />
+    <result column="empty_average_fuel_consumption" jdbcType="DOUBLE" property="emptyAverageFuelConsumption" />
+    <result column="carry_top_gear_maxspeed" jdbcType="INTEGER" property="carryTopGearMaxspeed" />
+    <result column="carry_maxspeed_rotation" jdbcType="INTEGER" property="carryMaxspeedRotation" />
+    <result column="carry_average_fuel_sonsumption" jdbcType="DOUBLE" property="carryAverageFuelSonsumption" />
+    <result column="user_complaint" jdbcType="VARCHAR" property="userComplaint" />
+    <result column="problem_solve_progress" jdbcType="VARCHAR" property="problemSolveProgress" />
+    <result column="user_evaluation" jdbcType="VARCHAR" property="userEvaluation" />
+    <result column="user_suggestion" jdbcType="VARCHAR" property="userSuggestion" />
+    <result column="create_by" jdbcType="INTEGER" property="createBy.id" />
+    <result column="create_name" jdbcType="VARCHAR" property="createBy.name" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="INTEGER" property="updateBy.id" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cjh, cxh, engine_type, drive_kilometer, goods_type, goods_tonnage, follow_kilometer, 
+    car_type, engine_idle_speed, engine_empty_idle_highspeed, empty_top_gear_maxspeed, 
+    empty_secondary_gear_maxspeed, empty_secondary_gear_maxspeed_rotation, empty_average_fuel_consumption, 
+    carry_top_gear_maxspeed, carry_maxspeed_rotation, carry_average_fuel_sonsumption, 
+    user_complaint, problem_solve_progress, user_evaluation, user_suggestion, office_id, 
+    create_by, create_name, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from new_product_follow
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from new_product_follow
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.qk.transmit.entity.NewProductFollow" useGeneratedKeys="true">
+    insert into new_product_follow (cjh, cxh, engine_type, 
+      drive_kilometer, goods_type, goods_tonnage, 
+      follow_kilometer, car_type, engine_idle_speed, 
+      engine_empty_idle_highspeed, empty_top_gear_maxspeed, 
+      empty_secondary_gear_maxspeed, empty_secondary_gear_maxspeed_rotation, 
+      empty_average_fuel_consumption, carry_top_gear_maxspeed, 
+      carry_maxspeed_rotation, carry_average_fuel_sonsumption, 
+      user_complaint, problem_solve_progress, user_evaluation, 
+      user_suggestion, office_id, create_by, 
+      create_name, create_date, update_by, 
+      update_date, remarks, del_flag
+      )
+    values (#{cjh,jdbcType=VARCHAR}, #{cxh,jdbcType=VARCHAR}, #{engineType,jdbcType=VARCHAR}, 
+      #{driveKilometer,jdbcType=DOUBLE}, #{goodsType,jdbcType=VARCHAR}, #{goodsTonnage,jdbcType=INTEGER}, 
+      #{followKilometer,jdbcType=DOUBLE}, #{carType,jdbcType=VARCHAR}, #{engineIdleSpeed,jdbcType=INTEGER}, 
+      #{engineEmptyIdleHighspeed,jdbcType=INTEGER}, #{emptyTopGearMaxspeed,jdbcType=INTEGER}, 
+      #{emptySecondaryGearMaxspeed,jdbcType=INTEGER}, #{emptySecondaryGearMaxspeedRotation,jdbcType=INTEGER}, 
+      #{emptyAverageFuelConsumption,jdbcType=DOUBLE}, #{carryTopGearMaxspeed,jdbcType=INTEGER}, 
+      #{carryMaxspeedRotation,jdbcType=INTEGER}, #{carryAverageFuelSonsumption,jdbcType=DOUBLE}, 
+      #{userComplaint,jdbcType=VARCHAR}, #{problemSolveProgress,jdbcType=VARCHAR}, #{userEvaluation,jdbcType=VARCHAR}, 
+      #{userSuggestion,jdbcType=VARCHAR}, #{officeId,jdbcType=INTEGER}, #{createBy,jdbcType=INTEGER}, 
+      #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=INTEGER}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.qk.transmit.entity.NewProductFollow" useGeneratedKeys="true">
+    insert into new_product_follow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cjh != null">
+        cjh,
+      </if>
+      <if test="cxh != null">
+        cxh,
+      </if>
+      <if test="engineType != null">
+        engine_type,
+      </if>
+      <if test="driveKilometer != null">
+        drive_kilometer,
+      </if>
+      <if test="goodsType != null">
+        goods_type,
+      </if>
+      <if test="goodsTonnage != null">
+        goods_tonnage,
+      </if>
+      <if test="followKilometer != null">
+        follow_kilometer,
+      </if>
+      <if test="carType != null">
+        car_type,
+      </if>
+      <if test="engineIdleSpeed != null">
+        engine_idle_speed,
+      </if>
+      <if test="engineEmptyIdleHighspeed != null">
+        engine_empty_idle_highspeed,
+      </if>
+      <if test="emptyTopGearMaxspeed != null">
+        empty_top_gear_maxspeed,
+      </if>
+      <if test="emptySecondaryGearMaxspeed != null">
+        empty_secondary_gear_maxspeed,
+      </if>
+      <if test="emptySecondaryGearMaxspeedRotation != null">
+        empty_secondary_gear_maxspeed_rotation,
+      </if>
+      <if test="emptyAverageFuelConsumption != null">
+        empty_average_fuel_consumption,
+      </if>
+      <if test="carryTopGearMaxspeed != null">
+        carry_top_gear_maxspeed,
+      </if>
+      <if test="carryMaxspeedRotation != null">
+        carry_maxspeed_rotation,
+      </if>
+      <if test="carryAverageFuelSonsumption != null">
+        carry_average_fuel_sonsumption,
+      </if>
+      <if test="userComplaint != null">
+        user_complaint,
+      </if>
+      <if test="problemSolveProgress != null">
+        problem_solve_progress,
+      </if>
+      <if test="userEvaluation != null">
+        user_evaluation,
+      </if>
+      <if test="userSuggestion != null">
+        user_suggestion,
+      </if>
+      <if test="officeId != null">
+        office_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cjh != null">
+        #{cjh,jdbcType=VARCHAR},
+      </if>
+      <if test="cxh != null">
+        #{cxh,jdbcType=VARCHAR},
+      </if>
+      <if test="engineType != null">
+        #{engineType,jdbcType=VARCHAR},
+      </if>
+      <if test="driveKilometer != null">
+        #{driveKilometer,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsType != null">
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTonnage != null">
+        #{goodsTonnage,jdbcType=INTEGER},
+      </if>
+      <if test="followKilometer != null">
+        #{followKilometer,jdbcType=DOUBLE},
+      </if>
+      <if test="carType != null">
+        #{carType,jdbcType=VARCHAR},
+      </if>
+      <if test="engineIdleSpeed != null">
+        #{engineIdleSpeed,jdbcType=INTEGER},
+      </if>
+      <if test="engineEmptyIdleHighspeed != null">
+        #{engineEmptyIdleHighspeed,jdbcType=INTEGER},
+      </if>
+      <if test="emptyTopGearMaxspeed != null">
+        #{emptyTopGearMaxspeed,jdbcType=INTEGER},
+      </if>
+      <if test="emptySecondaryGearMaxspeed != null">
+        #{emptySecondaryGearMaxspeed,jdbcType=INTEGER},
+      </if>
+      <if test="emptySecondaryGearMaxspeedRotation != null">
+        #{emptySecondaryGearMaxspeedRotation,jdbcType=INTEGER},
+      </if>
+      <if test="emptyAverageFuelConsumption != null">
+        #{emptyAverageFuelConsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="carryTopGearMaxspeed != null">
+        #{carryTopGearMaxspeed,jdbcType=INTEGER},
+      </if>
+      <if test="carryMaxspeedRotation != null">
+        #{carryMaxspeedRotation,jdbcType=INTEGER},
+      </if>
+      <if test="carryAverageFuelSonsumption != null">
+        #{carryAverageFuelSonsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="userComplaint != null">
+        #{userComplaint,jdbcType=VARCHAR},
+      </if>
+      <if test="problemSolveProgress != null">
+        #{problemSolveProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="userEvaluation != null">
+        #{userEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="userSuggestion != null">
+        #{userSuggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="officeId != null">
+        #{officeId,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qk.transmit.entity.NewProductFollow">
+    update new_product_follow
+    <set>
+      <if test="cjh != null">
+        cjh = #{cjh,jdbcType=VARCHAR},
+      </if>
+      <if test="cxh != null">
+        cxh = #{cxh,jdbcType=VARCHAR},
+      </if>
+      <if test="engineType != null">
+        engine_type = #{engineType,jdbcType=VARCHAR},
+      </if>
+      <if test="driveKilometer != null">
+        drive_kilometer = #{driveKilometer,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsType != null">
+        goods_type = #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTonnage != null">
+        goods_tonnage = #{goodsTonnage,jdbcType=INTEGER},
+      </if>
+      <if test="followKilometer != null">
+        follow_kilometer = #{followKilometer,jdbcType=DOUBLE},
+      </if>
+      <if test="carType != null">
+        car_type = #{carType,jdbcType=VARCHAR},
+      </if>
+      <if test="engineIdleSpeed != null">
+        engine_idle_speed = #{engineIdleSpeed,jdbcType=INTEGER},
+      </if>
+      <if test="engineEmptyIdleHighspeed != null">
+        engine_empty_idle_highspeed = #{engineEmptyIdleHighspeed,jdbcType=INTEGER},
+      </if>
+      <if test="emptyTopGearMaxspeed != null">
+        empty_top_gear_maxspeed = #{emptyTopGearMaxspeed,jdbcType=INTEGER},
+      </if>
+      <if test="emptySecondaryGearMaxspeed != null">
+        empty_secondary_gear_maxspeed = #{emptySecondaryGearMaxspeed,jdbcType=INTEGER},
+      </if>
+      <if test="emptySecondaryGearMaxspeedRotation != null">
+        empty_secondary_gear_maxspeed_rotation = #{emptySecondaryGearMaxspeedRotation,jdbcType=INTEGER},
+      </if>
+      <if test="emptyAverageFuelConsumption != null">
+        empty_average_fuel_consumption = #{emptyAverageFuelConsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="carryTopGearMaxspeed != null">
+        carry_top_gear_maxspeed = #{carryTopGearMaxspeed,jdbcType=INTEGER},
+      </if>
+      <if test="carryMaxspeedRotation != null">
+        carry_maxspeed_rotation = #{carryMaxspeedRotation,jdbcType=INTEGER},
+      </if>
+      <if test="carryAverageFuelSonsumption != null">
+        carry_average_fuel_sonsumption = #{carryAverageFuelSonsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="userComplaint != null">
+        user_complaint = #{userComplaint,jdbcType=VARCHAR},
+      </if>
+      <if test="problemSolveProgress != null">
+        problem_solve_progress = #{problemSolveProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="userEvaluation != null">
+        user_evaluation = #{userEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="userSuggestion != null">
+        user_suggestion = #{userSuggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="officeId != null">
+        office_id = #{officeId,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qk.transmit.entity.NewProductFollow">
+    update new_product_follow
+    set cjh = #{cjh,jdbcType=VARCHAR},
+      cxh = #{cxh,jdbcType=VARCHAR},
+      engine_type = #{engineType,jdbcType=VARCHAR},
+      drive_kilometer = #{driveKilometer,jdbcType=DOUBLE},
+      goods_type = #{goodsType,jdbcType=VARCHAR},
+      goods_tonnage = #{goodsTonnage,jdbcType=INTEGER},
+      follow_kilometer = #{followKilometer,jdbcType=DOUBLE},
+      car_type = #{carType,jdbcType=VARCHAR},
+      engine_idle_speed = #{engineIdleSpeed,jdbcType=INTEGER},
+      engine_empty_idle_highspeed = #{engineEmptyIdleHighspeed,jdbcType=INTEGER},
+      empty_top_gear_maxspeed = #{emptyTopGearMaxspeed,jdbcType=INTEGER},
+      empty_secondary_gear_maxspeed = #{emptySecondaryGearMaxspeed,jdbcType=INTEGER},
+      empty_secondary_gear_maxspeed_rotation = #{emptySecondaryGearMaxspeedRotation,jdbcType=INTEGER},
+      empty_average_fuel_consumption = #{emptyAverageFuelConsumption,jdbcType=DOUBLE},
+      carry_top_gear_maxspeed = #{carryTopGearMaxspeed,jdbcType=INTEGER},
+      carry_maxspeed_rotation = #{carryMaxspeedRotation,jdbcType=INTEGER},
+      carry_average_fuel_sonsumption = #{carryAverageFuelSonsumption,jdbcType=DOUBLE},
+      user_complaint = #{userComplaint,jdbcType=VARCHAR},
+      problem_solve_progress = #{problemSolveProgress,jdbcType=VARCHAR},
+      user_evaluation = #{userEvaluation,jdbcType=VARCHAR},
+      user_suggestion = #{userSuggestion,jdbcType=VARCHAR},
+      office_id = #{officeId,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=INTEGER},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=INTEGER},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
