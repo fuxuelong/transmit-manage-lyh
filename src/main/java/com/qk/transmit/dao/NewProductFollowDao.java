@@ -16,11 +16,22 @@ import org.springframework.stereotype.Component;
 @Mapper
 public interface NewProductFollowDao extends CrudDao<NewProductFollow> {
 
+    /**
+     * 删除
+     *
+     * @param id id
+     * @return 返回结果
+     */
     int deleteByPrimaryKey(Integer id);
 
-    int insert(NewProductFollow record);
+    /**
+     * 添加新产品跟车
+     *
+     * @param newProductFollow 新产品跟车实体对象
+     * @return 返回结果
+     */
+    int insert(NewProductFollow newProductFollow);
 
-    int insertSelective(NewProductFollow record);
 
     NewProductFollow selectByPrimaryKey(Integer id);
 

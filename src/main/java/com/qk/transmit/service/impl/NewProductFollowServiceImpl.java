@@ -15,6 +15,12 @@ public class NewProductFollowServiceImpl extends CrudServiceImpl<NewProductFollo
     @Resource
     private NewProductFollowDao newProductFollowDao;
 
+    /**
+     * 删除
+     *
+     * @param id id
+     * @return 返回结果
+     */
     @Override
     public int deleteByPrimaryKey(Integer id) {
         return newProductFollowDao.deleteByPrimaryKey(id);
@@ -25,10 +31,6 @@ public class NewProductFollowServiceImpl extends CrudServiceImpl<NewProductFollo
         return newProductFollowDao.insert(record);
     }
 
-    @Override
-    public int insertSelective(NewProductFollow record) {
-        return newProductFollowDao.insertSelective(record);
-    }
 
     @Override
     public NewProductFollow selectByPrimaryKey(Integer id) {
@@ -65,8 +67,8 @@ public class NewProductFollowServiceImpl extends CrudServiceImpl<NewProductFollo
      */
     @Override
     public ResponseCode updateNewProductFollow(NewProductFollow newProductFollow) {
-        //依据车架号查询,并进行修改
-        int update = newProductFollowDao.updateByCjh(newProductFollow);
+        //依据id查询修改
+        int update = newProductFollowDao.update(newProductFollow);
         return getResponseCode(update);
     }
 

@@ -10,12 +10,29 @@ import com.qk.transmit.service.NewProductFollowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 新产品跟车
+ *
+ * @author lyh
+ * @date 2021/9/13
+ */
 @RestController
 @RequestMapping("/newProductFollow")
 public class NewProductFollowController {
 
     @Autowired
     private NewProductFollowService newProductFollowServiceImpl;
+
+    /**
+     * 查询新产品跟车列表
+     *
+     * @param newProductFollow 新产品跟车实体对象
+     * @return 将得到的数据以List集合对象形式返回
+     */
+    @PostMapping("/getNewProductFollowList")
+    public PageInfo<NewProductFollow> getCheckList(@RequestBody NewProductFollow newProductFollow) {
+        return newProductFollowServiceImpl.findPage(newProductFollow);
+    }
 
     /**
      * 添加新产品跟车
@@ -27,6 +44,25 @@ public class NewProductFollowController {
     public ResponseJson saveCheck(@RequestBody NewProductFollow newProductFollow) {
         checkParam(newProductFollow);
         ResponseCode code = newProductFollowServiceImpl.addNewProductFollw(newProductFollow);
+        return new ResponseJson(code);
+    }
+
+    /**
+     * 修改
+     *
+     * @param newProductFollow 新产品跟车实体对象
+     * @return 返回结果
+     */
+    @PostMapping("/updateNewProductFollow")
+    public ResponseJson auditMoveStockApply(@RequestBody NewProductFollow newProductFollow) {
+        Object[] strArray = {
+                newProductFollow.getCjh(), newProductFollow.getCxh(),
+                newProductFollow.getEngineType(), newProductFollow.getCarType()
+        };
+        if (!StringUtils.isAllNotBlank(strArray)) {
+            return new ResponseJson(ResponseCode.FAIL, "必传字段为空");
+        }
+        ResponseCode code = newProductFollowServiceImpl.updateNewProductFollow(newProductFollow);
         return new ResponseJson(code);
     }
 
@@ -48,35 +84,7 @@ public class NewProductFollowController {
         return new ResponseJson(code);
     }
 
-    /**
-     * 修改
-     *
-     * @param newProductFollow 新产品跟车实体对象
-     * @return 返回结果
-     */
-    @PostMapping("/auditNewProductFollow")
-    public ResponseJson auditMoveStockApply(@RequestBody NewProductFollow newProductFollow) {
-        Object[] strArray = {
-                newProductFollow.getCjh(), newProductFollow.getCxh(),
-                newProductFollow.getEngineType(), newProductFollow.getCarType()
-        };
-        if (!StringUtils.isAllNotBlank(strArray)) {
-            return new ResponseJson(ResponseCode.FAIL, "必传字段为空");
-        }
-        ResponseCode code = newProductFollowServiceImpl.updateNewProductFollow(newProductFollow);
-        return new ResponseJson(code);
-    }
 
-    /**
-     * 查询新产品跟车列表
-     *
-     * @param newProductFollow 新产品跟车实体对象
-     * @return 将得到的数据以List集合对象形式返回
-     */
-    @PostMapping("/getNewProductFollowList")
-    public PageInfo<NewProductFollow> getCheckList(@RequestBody NewProductFollow newProductFollow) {
-        return newProductFollowServiceImpl.findPage(newProductFollow);
-    }
 
     /**
      * 校验必传参数

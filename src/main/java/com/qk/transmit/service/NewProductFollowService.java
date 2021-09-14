@@ -12,11 +12,15 @@ import org.springframework.stereotype.Component;
 public interface NewProductFollowService extends CrudService<NewProductFollowDao, NewProductFollow> {
 
 
+    /**
+     * 删除
+     *
+     * @param id id
+     * @return 返回结果
+     */
     int deleteByPrimaryKey(Integer id);
 
     int insert(NewProductFollow record);
-
-    int insertSelective(NewProductFollow record);
 
     NewProductFollow selectByPrimaryKey(Integer id);
 
@@ -24,7 +28,19 @@ public interface NewProductFollowService extends CrudService<NewProductFollowDao
 
     int updateByPrimaryKey(NewProductFollow record);
 
+    /**
+     * 添加新产品跟车
+     *
+     * @param newProductFollow 新产品跟车实体对象
+     * @return 返回结果
+     */
     ResponseCode addNewProductFollw(NewProductFollow newProductFollow);
 
+    /**
+     * 修改
+     *
+     * @param newProductFollow 新产品跟车实体对象
+     * @return 返回结果
+     */
     ResponseCode updateNewProductFollow(NewProductFollow newProductFollow);
 }
