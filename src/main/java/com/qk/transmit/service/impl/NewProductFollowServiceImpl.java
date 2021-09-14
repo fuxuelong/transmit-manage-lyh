@@ -5,47 +5,18 @@ import com.qk.commonservice.service.impl.CrudServiceImpl;
 import com.qk.transmit.dao.MoveStockApplyDao;
 import com.qk.transmit.entity.MoveStockApply;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
+
 import com.qk.transmit.dao.NewProductFollowDao;
 import com.qk.transmit.entity.NewProductFollow;
 import com.qk.transmit.service.NewProductFollowService;
+
 @Service
-public class NewProductFollowServiceImpl extends CrudServiceImpl<NewProductFollowDao, NewProductFollow> implements NewProductFollowService{
+public class NewProductFollowServiceImpl extends CrudServiceImpl<NewProductFollowDao, NewProductFollow> implements NewProductFollowService {
 
     @Resource
     private NewProductFollowDao newProductFollowDao;
-
-    /**
-     * 删除
-     *
-     * @param id id
-     * @return 返回结果
-     */
-    @Override
-    public int deleteByPrimaryKey(Integer id) {
-        return newProductFollowDao.deleteByPrimaryKey(id);
-    }
-
-    @Override
-    public int insert(NewProductFollow record) {
-        return newProductFollowDao.insert(record);
-    }
-
-
-    @Override
-    public NewProductFollow selectByPrimaryKey(Integer id) {
-        return newProductFollowDao.selectByPrimaryKey(id);
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(NewProductFollow record) {
-        return newProductFollowDao.updateByPrimaryKeySelective(record);
-    }
-
-    @Override
-    public int updateByPrimaryKey(NewProductFollow record) {
-        return newProductFollowDao.updateByPrimaryKey(record);
-    }
 
     /**
      * 添加新产品跟车
@@ -55,8 +26,8 @@ public class NewProductFollowServiceImpl extends CrudServiceImpl<NewProductFollo
      */
     @Override
     public ResponseCode addNewProductFollw(NewProductFollow newProductFollow) {
-        int insert = newProductFollowDao.insert(newProductFollow);
-        return getResponseCode(insert);
+        int count = save(newProductFollow);
+        return getResponseCode(count);
     }
 
     /**
@@ -67,9 +38,8 @@ public class NewProductFollowServiceImpl extends CrudServiceImpl<NewProductFollo
      */
     @Override
     public ResponseCode updateNewProductFollow(NewProductFollow newProductFollow) {
-        //依据id查询修改
-        int update = newProductFollowDao.update(newProductFollow);
-        return getResponseCode(update);
+        int count = save(newProductFollow);
+        return getResponseCode(count);
     }
 
     /**

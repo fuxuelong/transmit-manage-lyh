@@ -2,6 +2,7 @@ package com.qk.transmit.web;
 
 import com.github.pagehelper.PageInfo;
 import com.qk.commonservice.commonutil.StringUtils;
+import com.qk.commonservice.commonutil.UserUtils;
 import com.qk.commonservice.exception.CommonException;
 import com.qk.commonservice.exception.ResponseCode;
 import com.qk.commonservice.sysentity.ResponseJson;
@@ -24,6 +25,17 @@ public class NewProductFollowController {
     private NewProductFollowService newProductFollowServiceImpl;
 
     /**
+     * get
+     *
+     * @param id id
+     * @return 单个实体
+     */
+    @PostMapping("/getNewProductFollow")
+    public NewProductFollow getNewProductFollow(@RequestParam String id) {
+        return newProductFollowServiceImpl.get(id);
+    }
+
+    /**
      * 查询新产品跟车列表
      *
      * @param newProductFollow 新产品跟车实体对象
@@ -31,7 +43,7 @@ public class NewProductFollowController {
      */
     @PostMapping("/getNewProductFollowList")
     public PageInfo<NewProductFollow> getCheckList(@RequestBody NewProductFollow newProductFollow) {
-        return newProductFollowServiceImpl.findPage(newProductFollow);
+        return newProductFollowServiceImpl.findPageFilter(newProductFollow, UserUtils.getUser(), "a");
     }
 
     /**
@@ -74,16 +86,15 @@ public class NewProductFollowController {
      */
     @PostMapping("/deleteNewProductFollow")
     public ResponseJson delete(@RequestParam String id) {
-        int delete = newProductFollowServiceImpl.deleteByPrimaryKey(Integer.parseInt(id));
+        int delete = newProductFollowServiceImpl.delete(id);
         ResponseCode code;
         if (delete > 0) {
-            code= ResponseCode.OK;
+            code = ResponseCode.OK;
         } else {
-            code= ResponseCode.FAIL;
+            code = ResponseCode.FAIL;
         }
         return new ResponseJson(code);
     }
-
 
 
     /**

@@ -13,22 +13,6 @@ public interface NewProductFollowService extends CrudService<NewProductFollowDao
 
 
     /**
-     * 删除
-     *
-     * @param id id
-     * @return 返回结果
-     */
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(NewProductFollow record);
-
-    NewProductFollow selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(NewProductFollow record);
-
-    int updateByPrimaryKey(NewProductFollow record);
-
-    /**
      * 添加新产品跟车
      *
      * @param newProductFollow 新产品跟车实体对象
