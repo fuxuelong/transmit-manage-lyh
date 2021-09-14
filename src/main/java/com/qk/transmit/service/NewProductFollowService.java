@@ -26,5 +26,5 @@ public interface NewProductFollowService extends CrudService<NewProductFollowDao
 
     ResponseCode addNewProductFollw(NewProductFollow newProductFollow);
 
-    ResponseCode auditNewProductFollow(NewProductFollow newProductFollow);
+    ResponseCode updateNewProductFollow(NewProductFollow newProductFollow);
 }

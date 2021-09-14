@@ -33,46 +33,47 @@
     <result column="del_flag" jdbcType="CHAR" property="delFlag" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, cjh, cxh, engine_type, drive_kilometer, goods_type, goods_tonnage, follow_kilometer, 
-    car_type, engine_idle_speed, engine_empty_idle_highspeed, empty_top_gear_maxspeed, 
-    empty_secondary_gear_maxspeed, empty_secondary_gear_maxspeed_rotation, empty_average_fuel_consumption, 
-    carry_top_gear_maxspeed, carry_maxspeed_rotation, carry_average_fuel_sonsumption, 
-    user_complaint, problem_solve_progress, user_evaluation, user_suggestion, office_id, 
+    id, cjh, cxh, engine_type, drive_kilometer, goods_type, goods_tonnage, follow_kilometer,
+    car_type, engine_idle_speed, engine_empty_idle_highspeed, empty_top_gear_maxspeed,
+    empty_secondary_gear_maxspeed, empty_secondary_gear_maxspeed_rotation, empty_average_fuel_consumption,
+    carry_top_gear_maxspeed, carry_maxspeed_rotation, carry_average_fuel_sonsumption,
+    user_complaint, problem_solve_progress, user_evaluation, user_suggestion, office_id,
     create_by, create_name, create_date, update_by, update_date, remarks, del_flag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from new_product_follow
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from new_product_follow
+    UPDATE new_product_follow
+    SET del_flag = 1
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.qk.transmit.entity.NewProductFollow" useGeneratedKeys="true">
-    insert into new_product_follow (cjh, cxh, engine_type, 
-      drive_kilometer, goods_type, goods_tonnage, 
-      follow_kilometer, car_type, engine_idle_speed, 
-      engine_empty_idle_highspeed, empty_top_gear_maxspeed, 
-      empty_secondary_gear_maxspeed, empty_secondary_gear_maxspeed_rotation, 
-      empty_average_fuel_consumption, carry_top_gear_maxspeed, 
-      carry_maxspeed_rotation, carry_average_fuel_sonsumption, 
-      user_complaint, problem_solve_progress, user_evaluation, 
-      user_suggestion, office_id, create_by, 
-      create_name, create_date, update_by, 
+    insert into new_product_follow (cjh, cxh, engine_type,
+      drive_kilometer, goods_type, goods_tonnage,
+      follow_kilometer, car_type, engine_idle_speed,
+      engine_empty_idle_highspeed, empty_top_gear_maxspeed,
+      empty_secondary_gear_maxspeed, empty_secondary_gear_maxspeed_rotation,
+      empty_average_fuel_consumption, carry_top_gear_maxspeed,
+      carry_maxspeed_rotation, carry_average_fuel_sonsumption,
+      user_complaint, problem_solve_progress, user_evaluation,
+      user_suggestion, office_id, create_by,
+      create_name, create_date, update_by,
       update_date, remarks, del_flag
       )
-    values (#{cjh,jdbcType=VARCHAR}, #{cxh,jdbcType=VARCHAR}, #{engineType,jdbcType=VARCHAR}, 
-      #{driveKilometer,jdbcType=DOUBLE}, #{goodsType,jdbcType=VARCHAR}, #{goodsTonnage,jdbcType=INTEGER}, 
-      #{followKilometer,jdbcType=DOUBLE}, #{carType,jdbcType=VARCHAR}, #{engineIdleSpeed,jdbcType=INTEGER}, 
-      #{engineEmptyIdleHighspeed,jdbcType=INTEGER}, #{emptyTopGearMaxspeed,jdbcType=INTEGER}, 
-      #{emptySecondaryGearMaxspeed,jdbcType=INTEGER}, #{emptySecondaryGearMaxspeedRotation,jdbcType=INTEGER}, 
-      #{emptyAverageFuelConsumption,jdbcType=DOUBLE}, #{carryTopGearMaxspeed,jdbcType=INTEGER}, 
-      #{carryMaxspeedRotation,jdbcType=INTEGER}, #{carryAverageFuelSonsumption,jdbcType=DOUBLE}, 
-      #{userComplaint,jdbcType=VARCHAR}, #{problemSolveProgress,jdbcType=VARCHAR}, #{userEvaluation,jdbcType=VARCHAR}, 
-      #{userSuggestion,jdbcType=VARCHAR}, #{officeId,jdbcType=INTEGER}, #{createBy,jdbcType=INTEGER}, 
-      #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=INTEGER}, 
+    values (#{cjh,jdbcType=VARCHAR}, #{cxh,jdbcType=VARCHAR}, #{engineType,jdbcType=VARCHAR},
+      #{driveKilometer,jdbcType=DOUBLE}, #{goodsType,jdbcType=VARCHAR}, #{goodsTonnage,jdbcType=INTEGER},
+      #{followKilometer,jdbcType=DOUBLE}, #{carType,jdbcType=VARCHAR}, #{engineIdleSpeed,jdbcType=INTEGER},
+      #{engineEmptyIdleHighspeed,jdbcType=INTEGER}, #{emptyTopGearMaxspeed,jdbcType=INTEGER},
+      #{emptySecondaryGearMaxspeed,jdbcType=INTEGER}, #{emptySecondaryGearMaxspeedRotation,jdbcType=INTEGER},
+      #{emptyAverageFuelConsumption,jdbcType=DOUBLE}, #{carryTopGearMaxspeed,jdbcType=INTEGER},
+      #{carryMaxspeedRotation,jdbcType=INTEGER}, #{carryAverageFuelSonsumption,jdbcType=DOUBLE},
+      #{userComplaint,jdbcType=VARCHAR}, #{problemSolveProgress,jdbcType=VARCHAR}, #{userEvaluation,jdbcType=VARCHAR},
+      #{userSuggestion,jdbcType=VARCHAR}, #{officeId,jdbcType=INTEGER}, #{createBy.id,jdbcType=INTEGER},
+      #{createBy.name,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy.id,jdbcType=INTEGER},
       #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
       )
   </insert>
@@ -145,16 +146,16 @@
       <if test="officeId != null">
         office_id,
       </if>
-      <if test="createBy != null">
+      <if test="createBy.id != null">
         create_by,
       </if>
-      <if test="createName != null">
+      <if test="createBy.name != null">
         create_name,
       </if>
       <if test="createDate != null">
         create_date,
       </if>
-      <if test="updateBy != null">
+      <if test="updateBy.id != null">
         update_by,
       </if>
       <if test="updateDate != null">
@@ -234,16 +235,16 @@
       <if test="officeId != null">
         #{officeId,jdbcType=INTEGER},
       </if>
-      <if test="createBy != null">
+      <if test="createBy.id != null">
         #{createBy,jdbcType=INTEGER},
       </if>
-      <if test="createName != null">
+      <if test="createBy.name != null">
         #{createName,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null">
         #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateBy != null">
+      <if test="updateBy.id != null">
         #{updateBy,jdbcType=INTEGER},
       </if>
       <if test="updateDate != null">
@@ -326,16 +327,16 @@
       <if test="officeId != null">
         office_id = #{officeId,jdbcType=INTEGER},
       </if>
-      <if test="createBy != null">
+      <if test="createBy.id != null">
         create_by = #{createBy,jdbcType=INTEGER},
       </if>
-      <if test="createName != null">
+      <if test="createBy.name != null">
         create_name = #{createName,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null">
         create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateBy != null">
+      <if test="updateBy.id != null">
         update_by = #{updateBy,jdbcType=INTEGER},
       </if>
       <if test="updateDate != null">
@@ -374,13 +375,44 @@
       user_evaluation = #{userEvaluation,jdbcType=VARCHAR},
       user_suggestion = #{userSuggestion,jdbcType=VARCHAR},
       office_id = #{officeId,jdbcType=INTEGER},
-      create_by = #{createBy,jdbcType=INTEGER},
-      create_name = #{createName,jdbcType=VARCHAR},
+      create_by = #{createBy.id,jdbcType=INTEGER},
+      create_name = #{createBy.name,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
-      update_by = #{updateBy,jdbcType=INTEGER},
+      update_by = #{updateBy.id,jdbcType=INTEGER},
       update_date = #{updateDate,jdbcType=TIMESTAMP},
       remarks = #{remarks,jdbcType=VARCHAR},
       del_flag = #{delFlag,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
-  </update>
+  </update><update id="updateByCjh">
+  update new_product_follow
+    set cxh = #{cxh,jdbcType=VARCHAR},
+      engine_type = #{engineType,jdbcType=VARCHAR},
+      drive_kilometer = #{driveKilometer,jdbcType=DOUBLE},
+      goods_type = #{goodsType,jdbcType=VARCHAR},
+      goods_tonnage = #{goodsTonnage,jdbcType=INTEGER},
+      follow_kilometer = #{followKilometer,jdbcType=DOUBLE},
+      car_type = #{carType,jdbcType=VARCHAR},
+      engine_idle_speed = #{engineIdleSpeed,jdbcType=INTEGER},
+      engine_empty_idle_highspeed = #{engineEmptyIdleHighspeed,jdbcType=INTEGER},
+      empty_top_gear_maxspeed = #{emptyTopGearMaxspeed,jdbcType=INTEGER},
+      empty_secondary_gear_maxspeed = #{emptySecondaryGearMaxspeed,jdbcType=INTEGER},
+      empty_secondary_gear_maxspeed_rotation = #{emptySecondaryGearMaxspeedRotation,jdbcType=INTEGER},
+      empty_average_fuel_consumption = #{emptyAverageFuelConsumption,jdbcType=DOUBLE},
+      carry_top_gear_maxspeed = #{carryTopGearMaxspeed,jdbcType=INTEGER},
+      carry_maxspeed_rotation = #{carryMaxspeedRotation,jdbcType=INTEGER},
+      carry_average_fuel_sonsumption = #{carryAverageFuelSonsumption,jdbcType=DOUBLE},
+      user_complaint = #{userComplaint,jdbcType=VARCHAR},
+      problem_solve_progress = #{problemSolveProgress,jdbcType=VARCHAR},
+      user_evaluation = #{userEvaluation,jdbcType=VARCHAR},
+      user_suggestion = #{userSuggestion,jdbcType=VARCHAR},
+      office_id = #{officeId,jdbcType=INTEGER},
+      create_by = #{createBy.id,jdbcType=INTEGER},
+      create_name = #{createBy.name,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy.id,jdbcType=INTEGER},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where cjh = #{cjh,jdbcType=VARCHAR}
+</update>
 </mapper>

@@ -64,8 +64,9 @@ public class NewProductFollowServiceImpl extends CrudServiceImpl<NewProductFollo
      * @return 返回结果
      */
     @Override
-    public ResponseCode auditNewProductFollow(NewProductFollow newProductFollow) {
-        int update = newProductFollowDao.updateByPrimaryKey(newProductFollow);
+    public ResponseCode updateNewProductFollow(NewProductFollow newProductFollow) {
+        //依据车架号查询,并进行修改
+        int update = newProductFollowDao.updateByCjh(newProductFollow);
         return getResponseCode(update);
     }
 

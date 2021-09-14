@@ -27,4 +27,6 @@ public interface NewProductFollowDao extends CrudDao<NewProductFollow> {
     int updateByPrimaryKeySelective(NewProductFollow record);
 
     int updateByPrimaryKey(NewProductFollow record);
+
+    int updateByCjh(NewProductFollow newProductFollow);
 }

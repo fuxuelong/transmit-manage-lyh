@@ -38,7 +38,7 @@ public class NewProductFollowController {
      */
     @PostMapping("/deleteNewProductFollow")
     public ResponseJson delete(@RequestParam String id) {
-        int delete = newProductFollowServiceImpl.delete(id);
+        int delete = newProductFollowServiceImpl.deleteByPrimaryKey(Integer.parseInt(id));
         ResponseCode code;
         if (delete > 0) {
             code= ResponseCode.OK;
@@ -63,7 +63,7 @@ public class NewProductFollowController {
         if (!StringUtils.isAllNotBlank(strArray)) {
             return new ResponseJson(ResponseCode.FAIL, "必传字段为空");
         }
-        ResponseCode code = newProductFollowServiceImpl.auditNewProductFollow(newProductFollow);
+        ResponseCode code = newProductFollowServiceImpl.updateNewProductFollow(newProductFollow);
         return new ResponseJson(code);
     }
 
