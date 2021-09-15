@@ -26,27 +26,6 @@ public class NewProductFollowServiceImpl extends CrudServiceImpl<NewProductFollo
         return newProductFollowDao.deleteByPrimaryKey(id);
     }
 
-    @Override
-    public int insert(NewProductFollow record) {
-        return newProductFollowDao.insert(record);
-    }
-
-
-    @Override
-    public NewProductFollow selectByPrimaryKey(Integer id) {
-        return newProductFollowDao.selectByPrimaryKey(id);
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(NewProductFollow record) {
-        return newProductFollowDao.updateByPrimaryKeySelective(record);
-    }
-
-    @Override
-    public int updateByPrimaryKey(NewProductFollow record) {
-        return newProductFollowDao.updateByPrimaryKey(record);
-    }
-
     /**
      * 添加新产品跟车
      *

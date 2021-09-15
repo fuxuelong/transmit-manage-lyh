@@ -40,17 +40,26 @@
     user_complaint, problem_solve_progress, user_evaluation, user_suggestion, office_id,
     create_by, create_name, create_date, update_by, update_date, remarks, del_flag
   </sql>
+  <select id="get" resultType="com.qk.transmit.entity.NewProductFollow">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM new_product_follow a
+        WHERE a.id = #{id}
+    </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from new_product_follow
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+
+<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     UPDATE new_product_follow
     SET del_flag = 1
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+</update>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.qk.transmit.entity.NewProductFollow" useGeneratedKeys="true">
     insert into new_product_follow (cjh, cxh, engine_type,
       drive_kilometer, goods_type, goods_tonnage,
@@ -77,133 +86,6 @@
       #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
       )
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.qk.transmit.entity.NewProductFollow">
-    update new_product_follow
-    <set>
-      <if test="cjh != null">
-        cjh = #{cjh,jdbcType=VARCHAR},
-      </if>
-      <if test="cxh != null">
-        cxh = #{cxh,jdbcType=VARCHAR},
-      </if>
-      <if test="engineType != null">
-        engine_type = #{engineType,jdbcType=VARCHAR},
-      </if>
-      <if test="driveKilometer != null">
-        drive_kilometer = #{driveKilometer,jdbcType=DOUBLE},
-      </if>
-      <if test="goodsType != null">
-        goods_type = #{goodsType,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsTonnage != null">
-        goods_tonnage = #{goodsTonnage,jdbcType=INTEGER},
-      </if>
-      <if test="followKilometer != null">
-        follow_kilometer = #{followKilometer,jdbcType=DOUBLE},
-      </if>
-      <if test="carType != null">
-        car_type = #{carType,jdbcType=VARCHAR},
-      </if>
-      <if test="engineIdleSpeed != null">
-        engine_idle_speed = #{engineIdleSpeed,jdbcType=INTEGER},
-      </if>
-      <if test="engineEmptyIdleHighspeed != null">
-        engine_empty_idle_highspeed = #{engineEmptyIdleHighspeed,jdbcType=INTEGER},
-      </if>
-      <if test="emptyTopGearMaxspeed != null">
-        empty_top_gear_maxspeed = #{emptyTopGearMaxspeed,jdbcType=INTEGER},
-      </if>
-      <if test="emptySecondaryGearMaxspeed != null">
-        empty_secondary_gear_maxspeed = #{emptySecondaryGearMaxspeed,jdbcType=INTEGER},
-      </if>
-      <if test="emptySecondaryGearMaxspeedRotation != null">
-        empty_secondary_gear_maxspeed_rotation = #{emptySecondaryGearMaxspeedRotation,jdbcType=INTEGER},
-      </if>
-      <if test="emptyAverageFuelConsumption != null">
-        empty_average_fuel_consumption = #{emptyAverageFuelConsumption,jdbcType=DOUBLE},
-      </if>
-      <if test="carryTopGearMaxspeed != null">
-        carry_top_gear_maxspeed = #{carryTopGearMaxspeed,jdbcType=INTEGER},
-      </if>
-      <if test="carryMaxspeedRotation != null">
-        carry_maxspeed_rotation = #{carryMaxspeedRotation,jdbcType=INTEGER},
-      </if>
-      <if test="carryAverageFuelSonsumption != null">
-        carry_average_fuel_sonsumption = #{carryAverageFuelSonsumption,jdbcType=DOUBLE},
-      </if>
-      <if test="userComplaint != null">
-        user_complaint = #{userComplaint,jdbcType=VARCHAR},
-      </if>
-      <if test="problemSolveProgress != null">
-        problem_solve_progress = #{problemSolveProgress,jdbcType=VARCHAR},
-      </if>
-      <if test="userEvaluation != null">
-        user_evaluation = #{userEvaluation,jdbcType=VARCHAR},
-      </if>
-      <if test="userSuggestion != null">
-        user_suggestion = #{userSuggestion,jdbcType=VARCHAR},
-      </if>
-      <if test="officeId != null">
-        office_id = #{officeId,jdbcType=INTEGER},
-      </if>
-      <if test="createBy.id != null">
-        create_by = #{createBy,jdbcType=INTEGER},
-      </if>
-      <if test="createBy.name != null">
-        create_name = #{createName,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null">
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy.id != null">
-        update_by = #{updateBy,jdbcType=INTEGER},
-      </if>
-      <if test="updateDate != null">
-        update_date = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remarks != null">
-        remarks = #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="delFlag != null">
-        del_flag = #{delFlag,jdbcType=CHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.qk.transmit.entity.NewProductFollow">
-    update new_product_follow
-    set cjh = #{cjh,jdbcType=VARCHAR},
-      cxh = #{cxh,jdbcType=VARCHAR},
-      engine_type = #{engineType,jdbcType=VARCHAR},
-      drive_kilometer = #{driveKilometer,jdbcType=DOUBLE},
-      goods_type = #{goodsType,jdbcType=VARCHAR},
-      goods_tonnage = #{goodsTonnage,jdbcType=INTEGER},
-      follow_kilometer = #{followKilometer,jdbcType=DOUBLE},
-      car_type = #{carType,jdbcType=VARCHAR},
-      engine_idle_speed = #{engineIdleSpeed,jdbcType=INTEGER},
-      engine_empty_idle_highspeed = #{engineEmptyIdleHighspeed,jdbcType=INTEGER},
-      empty_top_gear_maxspeed = #{emptyTopGearMaxspeed,jdbcType=INTEGER},
-      empty_secondary_gear_maxspeed = #{emptySecondaryGearMaxspeed,jdbcType=INTEGER},
-      empty_secondary_gear_maxspeed_rotation = #{emptySecondaryGearMaxspeedRotation,jdbcType=INTEGER},
-      empty_average_fuel_consumption = #{emptyAverageFuelConsumption,jdbcType=DOUBLE},
-      carry_top_gear_maxspeed = #{carryTopGearMaxspeed,jdbcType=INTEGER},
-      carry_maxspeed_rotation = #{carryMaxspeedRotation,jdbcType=INTEGER},
-      carry_average_fuel_sonsumption = #{carryAverageFuelSonsumption,jdbcType=DOUBLE},
-      user_complaint = #{userComplaint,jdbcType=VARCHAR},
-      problem_solve_progress = #{problemSolveProgress,jdbcType=VARCHAR},
-      user_evaluation = #{userEvaluation,jdbcType=VARCHAR},
-      user_suggestion = #{userSuggestion,jdbcType=VARCHAR},
-      office_id = #{officeId,jdbcType=INTEGER},
-      create_by = #{createBy.id,jdbcType=INTEGER},
-      create_name = #{createBy.name,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      update_by = #{updateBy.id,jdbcType=INTEGER},
-      update_date = #{updateDate,jdbcType=TIMESTAMP},
-      remarks = #{remarks,jdbcType=VARCHAR},
-      del_flag = #{delFlag,jdbcType=CHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-
 <select id="findList" resultType="com.qk.transmit.entity.NewProductFollow">
     SELECT
     <include refid="Base_Column_List"/>
@@ -299,12 +181,12 @@
       <if test="officeId != null">
         office_id = #{officeId,jdbcType=INTEGER},
       </if>
-      <if test="createBy.id != null">
-        create_by = #{createBy,jdbcType=INTEGER},
-      </if>
-      <if test="createBy.name != null">
-        create_name = #{createName,jdbcType=VARCHAR},
-      </if>
+<!--      <if test="createBy.id != null">-->
+<!--        create_by = #{createBy,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="createBy.name != null">-->
+<!--        create_name = #{createName,jdbcType=VARCHAR},-->
+<!--      </if>-->
       <if test="createDate != null">
         create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
@@ -319,5 +201,6 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
 </update>
+
 
 </mapper>

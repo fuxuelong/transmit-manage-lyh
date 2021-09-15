@@ -84,8 +84,6 @@ public class NewProductFollowController {
         return new ResponseJson(code);
     }
 
-
-
     /**
      * 校验必传参数
      *
